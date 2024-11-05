@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/05 12:25:44 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:02:46 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,34 @@
 //# include <sys/wait.h>
 # include "../libft/libft.h"
 
-typedef enum e_lexer
+typedef enum e_socas
 {
-	REDIR_INPUT_1,
-	REDIR_OUTPUT_1,
-	REDIR_INPUT_2,
-	REDIR_OUTPUT_2,
-	PIPE,
-	SINGLE_QUOTES,
-	DOUBLE_QUOTES,
-	OTHER,
-}	t_lexer;
+	EAT,
+	SLEEP,
+	THINK,
+	DEAD,
+}	t_socas;
 
 typedef struct s_fork
 {
 	int				index;
-	bool			state;
+	bool			in_use;
 	struct s_fork	*next;
 }			t_fork;
 
+typedef struct s_philo
+{
+	int				index;
+	enum e_socas	state;
+	struct s_fork	*l_hand;
+	struct s_fork	*r_hand;
+	struct s_philo	left;
+	struct s_philo	right;
+}			t_philo;
+
 typedef struct s_table
 {
-	//struct s_philo	*philosophers;
+	struct s_philo	*phil_list;
 	struct s_fork	*fork_list;
 	int				num_philo;
 	int				time_die;

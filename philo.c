@@ -12,15 +12,21 @@
 
 #include "./Header/philo.h"
 
-static bool	arg_check(char **av)
+static bool	arg_check(char **av, int ac)
 {
-	int		i;
+	int	i;
+	int	j;
 
-	i = 0;
-	while (i < 4)
+	i = 1;
+	while (i < ac)
 	{
-		if (!ft_isdigit(av[i][0]))
-			return (false);
+		j = 0;
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (false);
+			j++;
+		}
 		i++;
 	}
 	return (true);
@@ -28,21 +34,21 @@ static bool	arg_check(char **av)
 
 int	main(int argc, char **argv)
 {
-	int	num_philo;
-	int	time_die;
-	int	time_eat;
-	int	time_sleep;
-	int	num_meals;
+	t_table	table;
 
-	if (argc != 5 && argc != 6)
-		return (ft_error_msg("Four arguments required"));
-	if (!arg_check(argv + 1))
-		return (ft_error_msg("Arguments must be numbers"));
-	num_philo = ft_atoi(argv[1]);
-	time_die = ft_atoi(argv[2]);
-	time_eat = ft_atoi(argv[3]);
-	time_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		num_meals = ft_atoi(argv[5]);
+	if (argc == 5 || argc == 6)
+	{
+		if (!arg_check(argv, argc))
+			return (ft_error_exit("Arguments must be numbers"));
+	}
+	else
+		return (ft_error_exit("Four or five arguments required"));
+
+	table.num_philo = ft_atoi(argv[1]);
+	table.time_die = ft_atoi(argv[2]);
+	table.time_eat = ft_atoi(argv[3]);
+	table.time_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		table.num_meals = ft_atoi(argv[5]);
 	return (0);
 }

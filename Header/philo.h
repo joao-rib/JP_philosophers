@@ -33,33 +33,22 @@ typedef enum e_lexer
 	OTHER,
 }	t_lexer;
 
-typedef struct s_token
-{
-	char			*token;
-	t_lexer			type;
-	struct s_token	*next;
-}			t_token;
-
-typedef struct s_ast
+typedef struct s_fork
 {
 	int				index;
-	char			*cmd;
-	char			**args;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	struct s_ast	*next;
-}			t_ast;
+	bool			state;
+	struct s_fork	*next;
+}			t_fork;
 
-typedef struct s_minish
+typedef struct s_table
 {
-	int				**pipes;
-	char			**env_list;
-	char			*cwd;
-	struct s_token	*tk_list;
-	struct s_ast	*cmd_list;
-	int				fd_in;
-	int				fd_out;
-}			t_minish;
+	struct s_fork	*fork_list;
+	int				num_philo;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				num_meals;
+}			t_table;
 
 //Utils - Initialising
 int		testin(void);

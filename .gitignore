@@ -3,7 +3,6 @@
 *.o
 *.a
 *.pdf
-dev*/
 *wip*
 README.md
 README.c

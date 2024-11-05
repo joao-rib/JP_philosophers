@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/15 17:18:53 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:25:44 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_fork
 
 typedef struct s_table
 {
+	//struct s_philo	*philosophers;
 	struct s_fork	*fork_list;
 	int				num_philo;
 	int				time_die;

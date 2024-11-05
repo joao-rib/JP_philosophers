@@ -39,10 +39,10 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		if (!arg_check(argv, argc))
-			return (ft_error_exit("Arguments must be numbers"));
+			ft_error_exit("Arguments must be numbers");
 	}
 	else
-		return (ft_error_exit("Four or five arguments required"));
+		ft_error_exit("Four or five arguments required");
 
 	table.num_philo = ft_atoi(argv[1]);
 	table.time_die = ft_atoi(argv[2]);

@@ -14,7 +14,8 @@
 
 /*bool	validate_numbers(t_table *tab)
 {
-	ft_error_msg("");
+	ft_error_msg("Negative values not accepted");
+	ft_error_msg("time to die, eat or sleep must be greater than 60ms")
 	return (false);
 	return (true);
 }*/

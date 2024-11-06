@@ -12,7 +12,7 @@
 
 #include "../Header/philo.h"
 
-void	start_eating(t_table *tab)
+/*void	start_eating(t_table *tab)
 {
 	t_philo	*phil_temp;
 	int		i;
@@ -27,4 +27,14 @@ void	start_eating(t_table *tab)
 	}
 	//pthread_create(tab->tab_thread, NULL, handle_table, tab);
 	return ;
+}*/
+
+void	*handle_spaghetti(t_philo *phil)
+{
+
+}
+
+void	*handle_table(t_table tab)
+{
+
 }

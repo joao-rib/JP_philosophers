@@ -1,0 +1,19 @@
+Function              | Common Error Codes          | Description
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_init    | EINVAL, EAGAIN, ENOMEM      | Invalid attributes, resource limits, or memory shortage for
+                      |                             | mutex initialization.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_destroy | EBUSY, EINVAL               | Mutex is in use or not properly initialized.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_lock    | EINVAL, EDEADLK, EAGAIN     | Invalid mutex, potential deadlock, or recursion limit
+                      |                             | exceeded.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_unlock  | EINVAL, EPERM               | Invalid mutex or unlocking by a non-owner thread.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_join          | EINVAL, ESRCH, EDEADLK      | Invalid or detached thread, thread not found, or deadlock
+                      |                             | if joining self.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_detach        | EINVAL, ESRCH               | Invalid or nonexistent thread.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_create        | EAGAIN, EINVAL, EPERM       | Resource limits, invalid attributes, or insufficient
+                      |                             | permissions.

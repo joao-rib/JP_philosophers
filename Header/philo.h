@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 17:55:19 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:50:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <time.h>
+# include <pthread.h>
 //# include <readline/readline.h>
 //# include <readline/history.h>
 //# include <sys/types.h>
@@ -56,6 +57,7 @@ typedef struct s_table
 	long int		time_eat;
 	long int		time_sleep;
 	long int		num_meals;
+	pthread_mutex_t	tab_mutex;
 }			t_table;
 
 //Utils - Listing

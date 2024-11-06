@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 18:13:29 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:07:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	set_table(t_table *tab)
 		create_fork(tab, i);
 		i++;
 	}
+	pthread_mutex_init(&(tab->tab_mutex), NULL);
 }
 
 int	main(int argc, char **argv)
@@ -89,7 +90,7 @@ int	main(int argc, char **argv)
 		table.num_meals = ft_atol(argv[5]);
 	validate_numbers(&table);
 	set_table(&table);
-	//start_eating(&table);
+	start_eating(&table);
 	clear_table(&table);
 	return (0);
 }

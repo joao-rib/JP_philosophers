@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 18:50:18 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:07:17 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	fork_addback(t_fork **p_lst, t_fork *new);
 //Utils - Validating
 bool	validate_args(char **av, int ac);
 void	validate_numbers(t_table *tab);
+//Utils - Eating
+void	start_eating(t_table *tab);
 //Utils - Clearing
 void	clear_table(t_table *tab);
 

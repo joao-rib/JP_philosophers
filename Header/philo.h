@@ -33,7 +33,8 @@ typedef struct s_fork
 {
 	int				index;
 	bool			in_use;
-	struct s_fork	*next;
+	struct s_fork	*left;
+	struct s_fork	*right;
 }			t_fork;
 
 typedef struct s_philo
@@ -42,8 +43,8 @@ typedef struct s_philo
 	enum e_socas	state;
 	struct s_fork	*l_hand;
 	struct s_fork	*r_hand;
-	struct s_philo	left;
-	struct s_philo	right;
+	struct s_philo	*left;
+	struct s_philo	*right;
 }			t_philo;
 
 typedef struct s_table
@@ -57,7 +58,15 @@ typedef struct s_table
 	int				num_meals;
 }			t_table;
 
-//Utils - Initialising
-int		testin(void);
+//Utils - Listing
+t_philo	*phil_last(t_philo *lst);
+void	phil_addback(t_philo **p_lst, t_philo *new);
+t_fork	*fork_last(t_fork *lst);
+void	fork_addback(t_fork **p_lst, t_fork *new);
+//Utils - Validating
+bool	validate_args(char **av, int ac);
+bool	validate_numbers(t_table *tab);
+//Utils - Clearing
+void	clear_table(t_table *tab);
 
 #endif

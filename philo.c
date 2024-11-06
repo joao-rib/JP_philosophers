@@ -12,76 +12,65 @@
 
 #include "./Header/philo.h"
 
+static void	create_fork(t_table *tab, int i)
+{
+	t_fork	*fork;
+
+	fork = ft_calloc(1, sizeof(t_fork));
+	if (!fork)
+		ft_error_exit("Memory allocation (fork)");
+	fork->index = i;
+	fork->in_use = false;
+	fork->left = NULL;
+	fork->right = NULL;
+	if (i + 1 == tab->num_philo)
+	{
+		fork->right = tab->fork_list;
+		tab->fork_list->left = fork;
+	}
+	fork_addback(tab, fork);
+}
+
+static void	create_philo(t_table *tab, int i)
+{
+	t_philo	*philosopher;
+
+	philosopher = ft_calloc(1, sizeof(t_philo));
+	if (!philosopher)
+		ft_error_exit("Memory allocation (philosopher)");
+	philosopher->index = i;
+	philosopher->l_hand = NULL;
+	philosopher->r_hand = NULL;
+	philosopher->state = THINK;
+	if (i + 1 == tab->num_philo)
+	{
+		philosopher->right = tab->phil_list;
+		tab->phil_list->left = philosopher;
+	}
+	phil_addback(&tab->phil_list, philosopher);
+}
+
 static void	set_table(t_table *tab)
 {
-/*	t_token	*token;
-
-	token = ft_calloc(1, sizeof(t_token));
-	if (!token)
-		ft_error_msg("Error while creating token");
-	token->token = ft_strdup(symbol);
-	if (!token->token)
-		ft_error_msg("Error while saving token");
-	token->type = type;
-	token->next = NULL;
-	token->to_merge = merge;
-	if (!merge)
-		ms->aux_merge = false;
-	tklst_addback(&ms->tk_list, token);*/
-	t_philo	*philosopher;
-	t_fork	*fork;
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < tab->num_philo)
 	{
-		philosopher = ft_calloc(1, sizeof(t_philo));
-		//Add error case
-		philosopher->index = i;
-		philosopher->l_hand = NULL;
-		philosopher->r_hand = NULL;
-		philosopher->state = THINK;
-		//addback(tab->phil_list, philosopher);
-		fork = ft_calloc(1, sizeof(t_fork));
-		//Add error case
-		fork->index = i;
-		fork->in_use = false;
-		//addback(tab->fork_list, fork);
+		create_philo(tab, i);
+		create_fork(tab, i);
 		i++;
 	}
-}
-
-static bool	arg_check(char **av, int ac)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (!ft_isdigit(av[i][j]))
-				return (false);
-			j++;
-		}
-		i++;
-	}
-	return (true);
 }
 
 int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	if (argc == 5 || argc == 6)
-	{
-		if (!arg_check(argv, argc))
-			ft_error_exit("Arguments must be numbers");
-	}
-	else
+	if (argc != 5 && argc != 6)
 		ft_error_exit("Four or five arguments required");
+	else if (!validate_args(argv, argc))
+		ft_error_exit("Arguments must be numbers");
 	ft_bzero(&table, sizeof(t_table));
 	table.num_philo = ft_atoi(argv[1]);
 	table.time_die = ft_atoi(argv[2]);
@@ -89,6 +78,10 @@ int	main(int argc, char **argv)
 	table.time_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		table.num_meals = ft_atoi(argv[5]);
+	//if (!validate_numbers(&table))
+	//	return (0);
 	set_table(&table);
+	//start_eating(&table);
+	clear_table(&table);
 	return (0);
 }

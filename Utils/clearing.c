@@ -12,7 +12,46 @@
 
 #include "../Header/philo.h"
 
-int	testin(void)
+static void	fork_clear(t_fork **lst, int size)
 {
-	return (0);
+	t_fork	*buff;
+	int		i;
+
+	i = 0;
+	if (lst)
+	{
+		while (i < size)
+		{
+			buff = (*lst)->right;
+			free(*lst);
+			*lst = buff;
+			i++;
+		}
+	}
+}
+
+static void	phil_clear(t_philo **lst, int size)
+{
+	t_philo	*buff;
+	int		i;
+
+	i = 0;
+	if (lst)
+	{
+		while (i < size)
+		{
+			buff = (*lst)->right;
+			free(*lst);
+			*lst = buff;
+			i++;
+		}
+	}
+}
+
+void	clear_table(t_table *tab)
+{
+	if (tab->phil_list)
+		phil_clear(&(tab->phil_list), tab->num_philo);
+	if (tab->fork_list)
+		fork_clear(&(tab->fork_list), tab->num_philo);
 }

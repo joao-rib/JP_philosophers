@@ -42,6 +42,7 @@ typedef struct s_philo
 {
 	long int		index;
 	enum e_socas	state;
+	pthread_t		ph_thread;
 	struct s_fork	*l_hand;
 	struct s_fork	*r_hand;
 	struct s_philo	*left;

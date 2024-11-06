@@ -14,5 +14,6 @@
 
 void	start_eating(t_table *tab)
 {
+	tab->num_meals *= 1;
 	return ;
 }

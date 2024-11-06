@@ -14,7 +14,9 @@
 
 /*bool	validate_numbers(t_table *tab)
 {
-
+	ft_error_msg("");
+	return (false);
+	return (true);
 }*/
 
 bool	validate_args(char **av, int ac)

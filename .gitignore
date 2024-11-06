@@ -7,9 +7,8 @@
 README.md
 README.c
 a.out
-main.c
-minishell
-minishell_bonus
+philo
+philo_bonus
 *.DS_Store*
 *.txt
 .nfs*

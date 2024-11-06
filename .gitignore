@@ -11,4 +11,4 @@ philo
 philo_bonus
 *.DS_Store*
 *.txt
-.nfs*
+*.nfs*

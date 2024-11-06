@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/05 13:05:13 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:40:43 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ int	main(int argc, char **argv)
 	else if (!validate_args(argv, argc))
 		ft_error_exit("Arguments must be numbers");
 	ft_bzero(&table, sizeof(t_table));
-	table.num_philo = ft_atoi(argv[1]);
-	table.time_die = ft_atoi(argv[2]);
-	table.time_eat = ft_atoi(argv[3]);
-	table.time_sleep = ft_atoi(argv[4]);
+	table.num_philo = ft_atol(argv[1]);
+	table.time_die = ft_atol(argv[2]);
+	table.time_eat = ft_atol(argv[3]);
+	table.time_sleep = ft_atol(argv[4]);
+	table.num_meals = -1;
 	if (argc == 6)
-		table.num_meals = ft_atoi(argv[5]);
-	//if (!validate_numbers(&table))
-	//	return (0);
+		table.num_meals = ft_atol(argv[5]);
+	validate_numbers(&table);
 	set_table(&table);
 	//start_eating(&table);
 	clear_table(&table);

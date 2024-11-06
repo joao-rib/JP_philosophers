@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testin.c                                           :+:      :+:    :+:   */
+/*   validating.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/16 15:45:15 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:36:36 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Header/philo.h"
 
-/*bool	validate_numbers(t_table *tab)
+void	validate_numbers(t_table *tab)
 {
-	ft_error_msg("Negative values not accepted");
-	ft_error_msg("time to die, eat or sleep must be greater than 60ms")
-	return (false);
-	return (true);
-}*/
+	if (tab->time_die < 60000)
+		ft_error_exit("Time to die must be greater than 60 miliseconds");
+	if (tab->time_eat < 60000)
+		ft_error_exit("Time to eat must be greater than 60 miliseconds");
+	if (tab->time_sleep < 60000)
+		ft_error_exit("Time to sleep must be greater than 60 miliseconds");
+}
 
 bool	validate_args(char **av, int ac)
 {
@@ -29,6 +31,10 @@ bool	validate_args(char **av, int ac)
 	while (i < ac)
 	{
 		j = 0;
+		while (ft_isdelim(av[i][j]))
+			j++;
+		if (av[i][j] == '-')
+			ft_error_exit("Negative values not accepted");
 		while (av[i][j])
 		{
 			if (!ft_isdigit(av[i][j]))

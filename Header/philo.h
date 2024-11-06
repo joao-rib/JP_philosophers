@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/05 13:02:46 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:55:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_socas
 
 typedef struct s_fork
 {
-	int				index;
+	long int		index;
 	bool			in_use;
 	struct s_fork	*left;
 	struct s_fork	*right;
@@ -39,7 +39,7 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int				index;
+	long int		index;
 	enum e_socas	state;
 	struct s_fork	*l_hand;
 	struct s_fork	*r_hand;
@@ -51,11 +51,11 @@ typedef struct s_table
 {
 	struct s_philo	*phil_list;
 	struct s_fork	*fork_list;
-	int				num_philo;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	int				num_meals;
+	long int		num_philo;
+	long int		time_die;
+	long int		time_eat;
+	long int		time_sleep;
+	long int		num_meals;
 }			t_table;
 
 //Utils - Listing
@@ -65,7 +65,7 @@ t_fork	*fork_last(t_fork *lst);
 void	fork_addback(t_fork **p_lst, t_fork *new);
 //Utils - Validating
 bool	validate_args(char **av, int ac);
-bool	validate_numbers(t_table *tab);
+void	validate_numbers(t_table *tab);
 //Utils - Clearing
 void	clear_table(t_table *tab);
 

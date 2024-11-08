@@ -34,7 +34,7 @@ void	*handle_spaghetti(t_philo *phil)
 
 }
 
-void	*handle_table(t_table tab)
+void	*handle_table(t_table *tab)
 {
 
 }

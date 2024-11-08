@@ -16,10 +16,9 @@
 # include <signal.h>
 # include <time.h>
 # include <pthread.h>
-//# include <readline/readline.h>
-//# include <readline/history.h>
 //# include <sys/types.h>
 //# include <sys/wait.h>
+# include <sys/time.h>
 # include "../libft/libft.h"
 
 typedef enum e_socas
@@ -58,6 +57,8 @@ typedef struct s_table
 	long int		time_eat;
 	long int		time_sleep;
 	long int		num_meals;
+	long int		starting_time;
+	pthread_t		tab_thread;
 	pthread_mutex_t	tab_mutex;
 }			t_table;
 
@@ -71,6 +72,9 @@ bool	validate_args(char **av, int ac);
 void	validate_numbers(t_table *tab);
 //Utils - Eating
 void	start_eating(t_table *tab);
+//Utils - Handling
+void	*handle_table(t_table *tab);
+void	*handle_spaghetti(t_philo *phil);
 //Utils - Clearing
 void	clear_table(t_table *tab);
 

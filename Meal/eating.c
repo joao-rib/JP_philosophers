@@ -37,7 +37,7 @@ void	start_eating(t_table *tab)
 	pthread_create(tab->tab_thread, NULL, handle_table, tab);
 	tab->starting_time = get_time();
 	set_mtx_bool(&tab->tab_mutex, &tab->ready_to_start, true); //=all_thread_ready
-	phil_temp = tab->phil_list;
+	phil_temp = tab->phil_list; //acho que já deu a volta...
 	i = 0;
 	while (i != tab->num_philo)
 	{

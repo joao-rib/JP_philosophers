@@ -89,7 +89,7 @@ void	*handle_table(void *arg)
 		i = 0;
 		while (i < tab->num_philo && !simulation_finished(table)) //WIP escrever função própria
 		{
-			if (philo_died(table->philo + i))
+			if (philo_died(table->philo + i)) //WIP escrever função própria
 			{
 				report_status(find_phil(tab->phil_list, i), DEAD); //WIP escrever find_phil
 				set_mtx_bool(&tab->tab_mutex, &tab->ready_to_end, true);

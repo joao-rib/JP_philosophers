@@ -48,7 +48,8 @@ static void	create_philo(t_table *tab, int i)
 	philosopher->index = i;
 	philosopher->l_hand = NULL;
 	philosopher->r_hand = NULL;
-	philosopher->state = THINK;
+	philosopher->satt = false;
+	philosopher->tab = tab;
 	if (i > 1 && i == tab->num_philo)
 	{
 		philosopher->right = tab->phil_list;

@@ -12,29 +12,9 @@
 
 #include "../Header/philo.h"
 
-/*void	start_eating(t_table *tab)
+void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value)
 {
-	t_philo	*phil_temp;
-	int		i;
-
-	i = 0;
-	phil_temp = tab->phil_list;
-	while (i != tab->num_philo)
-	{
-		//pthread_create(tab->phil_list->ph_thread, NULL, handle_spaghetti, phil_temp);
-		phil_temp = phil_temp->right;
-		i++;
-	}
-	//pthread_create(tab->tab_thread, NULL, handle_table, tab);
-	return ;
-}*/
-
-void	*handle_spaghetti(t_philo *phil)
-{
-
-}
-
-void	*handle_table(t_table *tab)
-{
-
+	pthread_mutex_lock(mutex); //Considerar um handle_error
+	*dest = value;
+	pthread_mutex_unlock(mutex); //Considerar um handle_error
 }

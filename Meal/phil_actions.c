@@ -107,3 +107,8 @@ void	phil_think(t_philo *phil)
 {
 	report_status(phil, THINK);
 }*/
+
+bool	phil_die(t_philo *phil)
+{
+
+}

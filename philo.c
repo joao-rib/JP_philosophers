@@ -72,6 +72,8 @@ static void	set_table(t_table *tab)
 		i++;
 	}
 	tab->running_threads = 0;
+	tab->ready_to_start = false;
+	tab->ready_to_end = false;
 	pthread_mutex_init(&(tab->tab_mutex), NULL);
 }
 

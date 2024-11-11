@@ -76,20 +76,21 @@ t_philo	*phil_last(t_philo *lst);
 void	phil_addback(t_philo **p_lst, t_philo *new);
 t_fork	*fork_last(t_fork *lst);
 void	fork_addback(t_fork **p_lst, t_fork *new);
-//Utils - Setting
-void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value);
-void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
-//Utils - Getting
-bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest);
-long	get_mtx_long(pthread_mutex_t *mutex, long *dest);
-long	get_time(void);
-//Utils - Checking
-bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2);
 //Utils - Validating
 bool	validate_args(char **av, int ac);
 void	validate_numbers(t_table *tab);
 //Utils - Clearing
 void	clear_table(t_table *tab);
+
+//Utils (mtx) - Setting
+void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value);
+void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
+//Utils (mtx) - Getting
+bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest);
+long	get_mtx_long(pthread_mutex_t *mutex, long *dest);
+long	get_time(void);
+//Utils (mtx) - Checking
+bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2);
 
 //Meal - Eating
 void	start_eating(t_table *tab);
@@ -98,5 +99,6 @@ void	*handle_table(void *arg);
 void	*handle_spaghetti(void *arg);
 //Meal - Phil Actions
 void	report_status(t_philo *phil, t_socas status);
+bool	phil_die(t_philo *phil);
 
 #endif

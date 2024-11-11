@@ -12,23 +12,31 @@
 
 #include "../Header/philo.h"
 
-void	add_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
+long	get_mtx_long(pthread_mutex_t *mutex, long *dest)
 {
+	bool	value;
+
 	pthread_mutex_lock(mutex); //Considerar um handle_error
-	*dest += value;
+	value = *dest;
 	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	return (value);
 }
 
-void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
+bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest)
 {
+	bool	value;
+
 	pthread_mutex_lock(mutex); //Considerar um handle_error
-	*dest = value;
+	value = *dest;
 	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	return (value);
 }
 
-void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value)
+long	get_time(void)
 {
-	pthread_mutex_lock(mutex); //Considerar um handle_error
-	*dest = value;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		ft_error_exit("Failure with gettimeofday()");
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }

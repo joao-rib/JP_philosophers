@@ -12,15 +12,6 @@
 
 #include "../Header/philo.h"
 
-long	get_time(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL))
-		ft_error_exit("Failure with gettimeofday()");
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
 void	start_eating(t_table *tab)
 {
 	t_philo	*phil_temp;
@@ -37,7 +28,7 @@ void	start_eating(t_table *tab)
 	pthread_create(tab->tab_thread, NULL, handle_table, tab); //Considerar um handle_error
 	tab->starting_time = get_time();
 	set_mtx_bool(&tab->tab_mutex, &tab->ready_to_start, true); //=all_thread_ready
-	phil_temp = tab->phil_list; //acho que já deu a volta...
+	//phil_temp = tab->phil_list; //acho que já deu a volta...
 	i = 0;
 	while (i != tab->num_philo)
 	{

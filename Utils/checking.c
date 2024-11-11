@@ -12,23 +12,14 @@
 
 #include "../Header/philo.h"
 
-void	add_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
+bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2)
 {
-	pthread_mutex_lock(mutex); //Considerar um handle_error
-	*dest += value;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
-}
+	bool	check;
 
-void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
-{
+	check = false;
 	pthread_mutex_lock(mutex); //Considerar um handle_error
-	*dest = value;
+	if (val1 == val2)
+		check = true;
 	pthread_mutex_unlock(mutex); //Considerar um handle_error
-}
-
-void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value)
-{
-	pthread_mutex_lock(mutex); //Considerar um handle_error
-	*dest = value;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	return (check);
 }

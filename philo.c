@@ -48,6 +48,7 @@ static void	create_philo(t_table *tab, int i)
 	philosopher->index = i;
 	philosopher->l_hand = NULL;
 	philosopher->r_hand = NULL;
+	philosopher->meals = 0;
 	philosopher->satt = false;
 	philosopher->tab = tab;
 	if (i > 1 && i == tab->num_philo)
@@ -70,6 +71,7 @@ static void	set_table(t_table *tab)
 		create_fork(tab, i);
 		i++;
 	}
+	tab->running_threads = 0;
 	pthread_mutex_init(&(tab->tab_mutex), NULL);
 }
 

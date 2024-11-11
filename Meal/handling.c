@@ -36,9 +36,10 @@ void	*handle_spaghetti(void *arg)
 	t_philo	*phil;
 
 	phil = (t_philo *)arg;
-	//wait_all_thread_ready(philo->table);
-	//increase_long(&philo->table->table_mtx, &philo->table->threads_running);
-	//set_long(&philo->philo_mtx, &philo->last_meal_time, gettime(MILLISECONDS));
+	while (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_start)))
+		phil = (t_philo *)arg;
+	add_mtx_long(&(phil->tab->tab_mutex), &(phil->tab->running_threads), 1);
+	set_mtx_long(&(phil->tab->tab_mutex), &(phil->satt_time), get_time());
 	while (!simulation_finished(philo->table)) //WIP escrever função própria
 	{
 		if (phil->satt) // num_meals?
@@ -81,8 +82,7 @@ void	*handle_table(void *arg)
 	int		i;
 
 	tab = (t_philo *)arg;
-	//while (!all_threads_running(&table->table_mtx, &table->threads_running,
-	//		table->philo_nbr)) //WIP escrever função própria
+	while (!check_mtx_equalto(&(tab->tab_mutex), tab->running_threads, tab->num_philo))
 		i = 0;
 	while (!simulation_finished(table)) //WIP escrever função própria
 	{

@@ -43,6 +43,8 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	long int		index;
+	long int		meals;
+	long int		satt_time;
 	bool			satt;
 	pthread_t		ph_thread;
 	struct s_fork	*l_hand;
@@ -62,6 +64,7 @@ typedef struct s_table
 	long int		time_sleep;
 	long int		num_meals;
 	long int		starting_time;
+	long int		running_threads;
 	bool			ready_to_start;
 	bool			ready_to_end;
 	pthread_t		tab_thread;
@@ -75,6 +78,13 @@ t_fork	*fork_last(t_fork *lst);
 void	fork_addback(t_fork **p_lst, t_fork *new);
 //Utils - Setting
 void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value);
+void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
+//Utils - Getting
+bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest);
+long	get_mtx_long(pthread_mutex_t *mutex, long *dest);
+long	get_time(void);
+//Utils - Checking
+bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2);
 //Utils - Validating
 bool	validate_args(char **av, int ac);
 void	validate_numbers(t_table *tab);
@@ -83,7 +93,6 @@ void	clear_table(t_table *tab);
 
 //Meal - Eating
 void	start_eating(t_table *tab);
-long	get_time(void);
 //Meal - Handling
 void	*handle_table(void *arg);
 void	*handle_spaghetti(void *arg);

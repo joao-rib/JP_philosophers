@@ -12,6 +12,20 @@
 
 #include "../Header/philo.h"
 
+void	*handle_onephil(void *arg)
+{
+	t_philo	*phil;
+
+	phil = (t_philo *)arg;
+	while (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_start)))
+		phil = (t_philo *)arg;
+	add_mtx_long(&(phil->tab->tab_mutex), &(phil->tab->running_threads), 1);
+	set_mtx_long(&(phil->tab->tab_mutex), &(phil->satt_time), get_time());
+	while (!get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+		usleep(2);
+	return (NULL);
+}
+
 void	*handle_spaghetti(void *arg)
 {
 	t_philo	*phil;

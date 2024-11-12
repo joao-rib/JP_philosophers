@@ -115,7 +115,13 @@ int	main(int argc, char **argv)
 		table.num_meals = ft_atol(argv[5]);
 	validate_numbers(&table);
 	set_table(&table);
-	start_eating(&table);
+	if (table.num_philo == 1)
+		eat_alone(&table);
+	else
+		start_eating(&table);
 	clear_table(&table);
 	return (0);
 }
+
+//Different mutex for printing?
+//Considerar handle_errors

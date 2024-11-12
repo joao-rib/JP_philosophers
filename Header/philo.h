@@ -99,9 +99,11 @@ bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2);
 
 //Meal - Eating
 void	start_eating(t_table *tab);
+void	eat_alone(t_table *tab);
 //Meal - Handling
 void	*handle_table(void *arg);
 void	*handle_spaghetti(void *arg);
+void	*handle_onephil(void *arg);
 //Meal - Phil Actions
 void	report_status(t_philo *phil, t_socas status);
 void	phil_eat(t_philo *phil);

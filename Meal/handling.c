@@ -56,18 +56,3 @@ void	*handle_table(void *arg)
 	}
 	return (NULL);
 }
-
-/*bool	philo_died(t_philo *philo)
-{
-	long	elapsed;
-	long	time_to_die;
-
-	if (get_bool(&philo->philo_mtx, &philo->full))
-		return (false);
-	elapsed = gettime(MILLISECONDS) - get_long(&philo->philo_mtx,
-			&philo->last_meal_time);
-	time_to_die = philo->table->time_to_die / 1e3;
-	if (elapsed > time_to_die)
-		return (true);
-	return (false);
-}*/

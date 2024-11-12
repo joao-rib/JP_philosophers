@@ -14,11 +14,11 @@
 
 void	validate_numbers(t_table *tab)
 {
-	if (tab->time_die < 60000)
+	if (tab->time_die < 60)
 		ft_error_exit("Time to die must be greater than 60 miliseconds");
-	if (tab->time_eat < 60000)
+	if (tab->time_eat < 60)
 		ft_error_exit("Time to eat must be greater than 60 miliseconds");
-	if (tab->time_sleep < 60000)
+	if (tab->time_sleep < 60)
 		ft_error_exit("Time to sleep must be greater than 60 miliseconds");
 	if (tab->num_philo == 0)
 		exit(0);

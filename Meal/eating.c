@@ -33,14 +33,15 @@ void	start_eating(t_table *tab)
 
 	i = 0;
 	phil_temp = tab->phil_list;
+	tab->starting_time = get_time();
 	while (i != tab->num_philo)
 	{
+		phil_temp->satt_time = tab->starting_time;//ELIMINATE
 		pthread_create(&(phil_temp->ph_thread), NULL, handle_spaghetti, phil_temp); //Considerar um handle_error
 		phil_temp = phil_temp->right;
 		i++;
 	}
 	pthread_create(&(tab->tab_thread), NULL, handle_table, tab); //Considerar um handle_error
-	tab->starting_time = get_time();
 	set_mtx_bool(&tab->tab_mutex, &tab->ready_to_start, true);
 	//phil_temp = tab->phil_list; //acho que já deu a volta...
 	i = 0;

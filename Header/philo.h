@@ -36,7 +36,7 @@ typedef enum e_socas
 typedef struct s_fork
 {
 	long int		index;
-	bool			held;
+	//bool			held;
 	pthread_mutex_t	fork_mutex;
 	struct s_fork	*left;
 	struct s_fork	*right;

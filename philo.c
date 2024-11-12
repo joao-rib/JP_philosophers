@@ -44,7 +44,7 @@ static void	create_fork(t_table *tab, long i)
 		ft_error_exit("Memory allocation (fork)");
 	}
 	fork->index = i;
-	fork->held = false;
+	//fork->held = false;
 	fork->left = NULL;
 	fork->right = NULL;
 	if (i > 0 && i + 1 == tab->num_philo)
@@ -107,9 +107,9 @@ int	main(int argc, char **argv)
 		ft_error_exit("Arguments must be numbers");
 	ft_bzero(&table, sizeof(t_table));
 	table.num_philo = ft_atol(argv[1]);
-	table.time_die = ft_atol(argv[2]) * 1000;
-	table.time_eat = ft_atol(argv[3]) * 1000;
-	table.time_sleep = ft_atol(argv[4]) * 1000;
+	table.time_die = ft_atol(argv[2]);
+	table.time_eat = ft_atol(argv[3]);
+	table.time_sleep = ft_atol(argv[4]);
 	table.num_meals = -1;
 	if (argc == 6)
 		table.num_meals = ft_atol(argv[5]);

@@ -37,8 +37,8 @@ void	report_status(t_philo *phil, t_socas status)
 {
 	long	timestamp;
 
-	timestamp = get_time() - phil->tab->starting_time;
 	pthread_mutex_lock(&(phil->tab->tab_mutex)); //Different mutex for printing? //Considerar um handle_error
+	timestamp = get_time() - phil->tab->starting_time;
 	if (status == FORK)
 		printf("%ld %ld has taken a fork\n", timestamp, phil->index);
 	else if (status == THINK)
@@ -87,6 +87,8 @@ bool	phil_die(t_philo *phil)
 	if (get_mtx_bool(&(phil->ph_mutex), &(phil->satt)))
 		return (false);
 	hungry_time = get_time() - get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
+	//printf ("\nHungry_time=%ld\nSatt_time=%ld\n\n", hungry_time, get_mtx_long(&(phil->ph_mutex), &(phil->satt_time))); //ELIMINATE
+	printf ("\nHungry_time=%ld\n\n", hungry_time); //ELIMINATE
 	if (hungry_time > phil->tab->time_die)
 		return (true);
 	return (false);

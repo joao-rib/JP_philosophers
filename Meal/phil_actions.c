@@ -12,66 +12,25 @@
 
 #include "../Header/philo.h"
 
-/*void	write_status(t_philo *philo, t_philo_status status)
+/*void	precise_usleep(long usec, t_table *table)
 {
+	long	start;
 	long	elapsed;
+	long	rem;
 
-	elapsed = gettime(MILLISECONDS) - philo->table->start_simulation;
-	safe_mutex_handle(&philo->table->print_mtx, LOCK);
-	if (THINKING == status && !get_bool(&philo->table->table_mtx,
-			&philo->table->end_simulation))
-		printf("%ld %d is thinking\n", elapsed, philo->philo_id);
-	else if (EATING == status && !get_bool(&philo->table->table_mtx,
-			&philo->table->end_simulation))
-		printf("%ld %d is eating\n", elapsed, philo->philo_id);
-	else if (SLEEPING == status && !get_bool(&philo->table->table_mtx,
-			&philo->table->end_simulation))
-		printf("%ld %d is sleeping\n", elapsed, philo->philo_id);
-	else if (DIED == status && !get_bool(&philo->table->table_mtx,
-			&philo->table->end_simulation))
-		printf("%ld %d died\n", elapsed, philo->philo_id);
-	else if ((TAKING_FIRST_FORK == status || TAKING_SECOND_FORK == status)
-		&& !get_bool(&philo->table->table_mtx,
-			&philo->table->end_simulation))
-		printf("%ld %d has taken a fork\n", elapsed, philo->philo_id);
-	safe_mutex_handle(&philo->table->print_mtx, UNLOCK);
-}*/
-
-/*void	pick_forks(t_philo *philo)
-{
-	safe_mutex_handle(&philo->first_fork->fork, LOCK);
-	write_status(philo, TAKING_FIRST_FORK);
-	safe_mutex_handle(&philo->second_fork->fork, LOCK);
-	write_status(philo, TAKING_SECOND_FORK);
-}
-
-void	eat(t_philo *philo)
-{
-	safe_mutex_handle(&philo->first_fork->fork, LOCK);
-	write_status(philo, TAKING_FIRST_FORK);
-	safe_mutex_handle(&philo->second_fork->fork, LOCK);
-	write_status(philo, TAKING_SECOND_FORK);
-	set_long(&philo->philo_mtx, &philo->last_meal_time, gettime(MILLISECONDS));
-	philo->meals_counter++;
-	write_status(philo, EATING);
-	precise_usleep(philo->table->time_to_eat, philo->table);
-	if (philo->table->nbr_limit_meals > 0
-		&& philo->meals_counter == philo->table->nbr_limit_meals)
-		set_bool(&philo->philo_mtx, &philo->full, true);
-	safe_mutex_handle(&philo->first_fork->fork, UNLOCK);
-	safe_mutex_handle(&philo->second_fork->fork, UNLOCK);
-}
-
-void	think(t_philo *philo)
-{
-	write_status(philo, THINKING);
-	precise_usleep(TIME_TO_THINK, philo->table);
-}
-
-void	sleep_philo(t_philo *philo)
-{
-	write_status(philo, SLEEPING);
-	precise_usleep(philo->table->time_to_sleep, philo->table);
+	start = gettime(MICROSECONDS);
+	while (gettime(MICROSECONDS) - start < usec)
+	{
+		if (simulation_finished(table))
+			break ;
+		elapsed = gettime(MICROSECONDS) - start;
+		rem = usec - elapsed;
+		if (rem > 1e3)
+			usleep(rem / 2);
+		else
+			while (gettime(MICROSECONDS) - start < usec)
+				;
+	}
 }*/
 
 void	report_status(t_philo *phil, t_socas status)
@@ -79,36 +38,56 @@ void	report_status(t_philo *phil, t_socas status)
 	long	timestamp;
 
 	timestamp = get_time() - phil->tab->starting_time;
-	pthread_mutex_lock(phil->tab->tab_mutex); //Different mutex for printing? //Considerar um handle_error
+	pthread_mutex_lock(&(phil->tab->tab_mutex)); //Different mutex for printing? //Considerar um handle_error
 	if (status == FORK)
-		printf("%ld %d has taken a fork\n", timestamp, phil->index);
+		printf("%ld %ld has taken a fork\n", timestamp, phil->index);
 	else if (status == THINK)
-		printf("%ld %d is thinking\n", timestamp, phil->index);
+		printf("%ld %ld is thinking\n", timestamp, phil->index);
 	else if (status == SLEEP)
-		printf("%ld %d is sleeping\n", timestamp, phil->index);
+		printf("%ld %ld is sleeping\n", timestamp, phil->index);
 	else if (status == EAT)
-		printf("%ld %d is eating\n", timestamp, phil->index);
-	else if (status = DEAD)
-		printf("%ld %d died\n", timestamp, phil->index);
-	pthread_mutex_unlock(phil->tab->tab_mutex); //Different mutex for printing? //Considerar um handle_error
+		printf("%ld %ld is eating\n", timestamp, phil->index);
+	else if (status == DEAD)
+		printf("%ld %ld died\n", timestamp, phil->index);
+	pthread_mutex_unlock(&(phil->tab->tab_mutex)); //Different mutex for printing? //Considerar um handle_error
 }
 
-/*void	phil_eat(t_philo *phil)
+void	phil_eat(t_philo *phil)
 {
-
+	pthread_mutex_lock(&(phil->l_hand->fork_mutex)); //Considerar um handle_error
+	report_status(phil, FORK);
+	pthread_mutex_lock(&(phil->r_hand->fork_mutex)); //Considerar um handle_error
+	report_status(phil, FORK);
+	set_mtx_long(&(phil->ph_mutex), &(phil->satt_time), get_time());
+	phil->meals++;
+	report_status(phil, EAT);
+	usleep(phil->tab->time_eat * 1000);
+	if (phil->tab->num_meals > 0 && phil->meals == phil->tab->num_meals)
+		set_mtx_bool(&(phil->ph_mutex), &(phil->satt), true);
+	pthread_mutex_unlock(&(phil->l_hand->fork_mutex)); //Considerar um handle_error
+	pthread_mutex_unlock(&(phil->r_hand->fork_mutex)); //Considerar um handle_error
 }
 
 void	phil_sleep(t_philo *phil)
 {
-	
+	report_status(phil, SLEEP);
+	usleep(phil->tab->time_sleep * 1000);
 }
 
 void	phil_think(t_philo *phil)
 {
 	report_status(phil, THINK);
-}*/
+	usleep(1000);
+}
 
 bool	phil_die(t_philo *phil)
 {
+	long	hungry_time;
 
+	if (get_mtx_bool(&(phil->ph_mutex), &(phil->satt)))
+		return (false);
+	hungry_time = get_time() - get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
+	if (hungry_time > phil->tab->time_die)
+		return (true);
+	return (false);
 }

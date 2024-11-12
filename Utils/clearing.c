@@ -23,6 +23,7 @@ static void	fork_clear(t_fork **lst, int size)
 		while (i < size)
 		{
 			buff = (*lst)->right;
+			pthread_mutex_destroy(&((*lst)->fork_mutex));
 			free(*lst);
 			*lst = buff;
 			i++;
@@ -41,6 +42,7 @@ static void	phil_clear(t_philo **lst, int size)
 		while (i < size)
 		{
 			buff = (*lst)->right;
+			pthread_mutex_destroy(&((*lst)->ph_mutex));
 			free(*lst);
 			*lst = buff;
 			i++;
@@ -50,6 +52,7 @@ static void	phil_clear(t_philo **lst, int size)
 
 void	clear_table(t_table *tab)
 {
+	pthread_mutex_destroy(&(tab->tab_mutex));
 	if (tab->phil_list)
 		phil_clear(&(tab->phil_list), tab->num_philo);
 	if (tab->fork_list)

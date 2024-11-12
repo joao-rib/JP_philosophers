@@ -12,6 +12,7 @@
 
 #ifndef PHILO_H
 # define PHILO_H
+# include <stdio.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <time.h>
@@ -35,7 +36,8 @@ typedef enum e_socas
 typedef struct s_fork
 {
 	long int		index;
-	bool			in_use;
+	bool			held;
+	pthread_mutex_t	fork_mutex;
 	struct s_fork	*left;
 	struct s_fork	*right;
 }			t_fork;
@@ -47,6 +49,7 @@ typedef struct s_philo
 	long int		satt_time;
 	bool			satt;
 	pthread_t		ph_thread;
+	pthread_mutex_t	ph_mutex;
 	struct s_fork	*l_hand;
 	struct s_fork	*r_hand;
 	struct s_philo	*left;
@@ -74,6 +77,7 @@ typedef struct s_table
 //Utils - Listing
 t_philo	*phil_last(t_philo *lst);
 void	phil_addback(t_philo **p_lst, t_philo *new);
+t_philo	*find_phil(t_philo *lst, long index);
 t_fork	*fork_last(t_fork *lst);
 void	fork_addback(t_fork **p_lst, t_fork *new);
 //Utils - Validating
@@ -85,6 +89,7 @@ void	clear_table(t_table *tab);
 //Utils (mtx) - Setting
 void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value);
 void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
+void	add_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
 //Utils (mtx) - Getting
 bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest);
 long	get_mtx_long(pthread_mutex_t *mutex, long *dest);
@@ -99,6 +104,9 @@ void	*handle_table(void *arg);
 void	*handle_spaghetti(void *arg);
 //Meal - Phil Actions
 void	report_status(t_philo *phil, t_socas status);
+void	phil_eat(t_philo *phil);
+void	phil_sleep(t_philo *phil);
+void	phil_think(t_philo *phil);
 bool	phil_die(t_philo *phil);
 
 #endif

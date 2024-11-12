@@ -25,9 +25,9 @@ void	*handle_spaghetti(void *arg)
 	{
 		if (phil->satt)
 			break ;
-		phil_eat(phil); //report_status(phil, FORK)x2 + report_status(phil, EAT);
-		phil_sleep(phil); //report_status(phil, SLEEP);
-		phil_think(phil); //report_status(phil, THINK);
+		phil_eat(phil);
+		phil_sleep(phil);
+		phil_think(phil);
 	}
 	return (NULL);
 }
@@ -35,20 +35,20 @@ void	*handle_spaghetti(void *arg)
 void	*handle_table(void *arg)
 {
 	t_table	*tab;
-	int		i;
+	long		i;
 
-	tab = (t_philo *)arg;
+	tab = (t_table *)arg;
 	while (!check_mtx_equalto(&(tab->tab_mutex), tab->running_threads, tab->num_philo))
 		i = 0;
 	while (!get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
 	{
-		i = 0;
-		while (i < tab->num_philo &&
+		i = 1;
+		while (i <= tab->num_philo &&
 				!get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
 		{
-			if (philo_died(table->philo + i)) //WIP escrever função própria "phil_die" //WIP escrever find_phil
+			if (phil_die(find_phil(tab->phil_list, i)))
 			{
-				report_status(find_phil(tab->phil_list, i), DEAD); //WIP escrever find_phil
+				report_status(find_phil(tab->phil_list, i), DEAD);
 				set_mtx_bool(&tab->tab_mutex, &tab->ready_to_end, true);
 			}
 		i++;

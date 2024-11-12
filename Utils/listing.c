@@ -41,6 +41,22 @@ void	fork_addback(t_fork **lst, t_fork *new)
 	}
 }
 
+t_philo	*find_phil(t_philo *lst, long index)
+{
+	t_philo	*buff;
+
+	if (!lst)
+		return (NULL);
+	buff = lst;
+	while (buff->right != NULL && (buff->index > buff->left->index))
+	{
+		if (buff->index == index)
+			break ;
+		buff = buff->right;
+	}
+	return (buff);
+}
+
 t_philo	*phil_last(t_philo *lst)
 {
 	t_philo	*ult;

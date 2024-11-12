@@ -12,7 +12,28 @@
 
 #include "./Header/philo.h"
 
-static void	create_fork(t_table *tab, int i)
+static void	assign_forks(t_table *tab)
+{
+	t_philo	*phil_buff;
+	t_fork	*fork_buff;
+	long	i;
+
+	i = 1;
+	phil_buff = tab->phil_list;
+	fork_buff = tab->fork_list;
+	while (i <= tab->num_philo)
+	{
+		phil_buff->l_hand = fork_buff;
+		if (tab->num_philo == 1)
+			break ;
+		phil_buff->r_hand = fork_buff->right;
+		phil_buff = phil_buff->right;
+		fork_buff = fork_buff->right;
+		i++;
+	}
+}
+
+static void	create_fork(t_table *tab, long i)
 {
 	t_fork	*fork;
 
@@ -23,7 +44,7 @@ static void	create_fork(t_table *tab, int i)
 		ft_error_exit("Memory allocation (fork)");
 	}
 	fork->index = i;
-	fork->in_use = false;
+	fork->held = false;
 	fork->left = NULL;
 	fork->right = NULL;
 	if (i > 0 && i + 1 == tab->num_philo)
@@ -31,11 +52,11 @@ static void	create_fork(t_table *tab, int i)
 		fork->right = tab->fork_list;
 		tab->fork_list->left = fork;
 	}
-	ft_printf("Fork Number %d added\n", i);
+	pthread_mutex_init(&(fork->fork_mutex), NULL);
 	fork_addback(&tab->fork_list, fork);
 }
 
-static void	create_philo(t_table *tab, int i)
+static void	create_philo(t_table *tab, long i)
 {
 	t_philo	*philosopher;
 
@@ -46,8 +67,6 @@ static void	create_philo(t_table *tab, int i)
 		ft_error_exit("Memory allocation (philosopher)");
 	}
 	philosopher->index = i;
-	philosopher->l_hand = NULL;
-	philosopher->r_hand = NULL;
 	philosopher->meals = 0;
 	philosopher->satt = false;
 	philosopher->tab = tab;
@@ -56,13 +75,13 @@ static void	create_philo(t_table *tab, int i)
 		philosopher->right = tab->phil_list;
 		tab->phil_list->left = philosopher;
 	}
-	ft_printf("Philosopher Number %d added\n", i);
+	pthread_mutex_init(&(philosopher->ph_mutex), NULL);
 	phil_addback(&tab->phil_list, philosopher);
 }
 
 static void	set_table(t_table *tab)
 {
-	int	i;
+	long	i;
 
 	i = 0;
 	while (i < tab->num_philo)
@@ -71,6 +90,7 @@ static void	set_table(t_table *tab)
 		create_fork(tab, i);
 		i++;
 	}
+	assign_forks(tab);
 	tab->running_threads = 0;
 	tab->ready_to_start = false;
 	tab->ready_to_end = false;

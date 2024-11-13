@@ -36,7 +36,6 @@ typedef enum e_socas
 typedef struct s_fork
 {
 	long int		index;
-	//bool			held;
 	pthread_mutex_t	fork_mutex;
 	struct s_fork	*left;
 	struct s_fork	*right;
@@ -90,6 +89,7 @@ void	clear_table(t_table *tab);
 void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value);
 void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
 void	add_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
+void	subtr_mtx_long(pthread_mutex_t *mutex, long *dest, long value);
 //Utils (mtx) - Getting
 bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest);
 long	get_mtx_long(pthread_mutex_t *mutex, long *dest);

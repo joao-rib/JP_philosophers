@@ -62,7 +62,7 @@ void	phil_eat(t_philo *phil)
 	phil->meals++;
 	report_status(phil, EAT);
 	usleep(phil->tab->time_eat * 1000);
-	if (phil->tab->num_meals > 0 && phil->meals == phil->tab->num_meals)
+	if (phil->tab->num_meals >= 0 && phil->meals == phil->tab->num_meals)
 		set_mtx_bool(&(phil->ph_mutex), &(phil->satt), true);
 	pthread_mutex_unlock(&(phil->l_hand->fork_mutex)); //Considerar um handle_error
 	pthread_mutex_unlock(&(phil->r_hand->fork_mutex)); //Considerar um handle_error
@@ -83,12 +83,14 @@ void	phil_think(t_philo *phil)
 bool	phil_die(t_philo *phil)
 {
 	long	hungry_time;
+	long	lastmeal_time;
 
 	if (get_mtx_bool(&(phil->ph_mutex), &(phil->satt)))
 		return (false);
-	hungry_time = get_time() - get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
-	//printf ("\nHungry_time=%ld\nSatt_time=%ld\n\n", hungry_time, get_mtx_long(&(phil->ph_mutex), &(phil->satt_time))); //ELIMINATE
-	printf ("\nHungry_time=%ld\n\n", hungry_time); //ELIMINATE
+	lastmeal_time = get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
+	hungry_time = get_time();
+	printf ("\nHungry_time=%ld\nLastmeal_time=%ld\n\n", hungry_time, lastmeal_time); //ELIMINATE
+	subtr_mtx_long(&(phil->ph_mutex), &hungry_time, lastmeal_time);
 	if (hungry_time > phil->tab->time_die)
 		return (true);
 	return (false);

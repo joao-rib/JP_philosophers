@@ -12,6 +12,13 @@
 
 #include "../Header/philo.h"
 
+void	subtr_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
+{
+	pthread_mutex_lock(mutex); //Considerar um handle_error
+	*dest -= value;
+	pthread_mutex_unlock(mutex); //Considerar um handle_error
+}
+
 void	add_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
 {
 	pthread_mutex_lock(mutex); //Considerar um handle_error
@@ -23,6 +30,7 @@ void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
 {
 	pthread_mutex_lock(mutex); //Considerar um handle_error
 	*dest = value;
+	printf ("\nSet_mtx_long, Value=%ld\n\n", value); //ELIMINATE
 	pthread_mutex_unlock(mutex); //Considerar um handle_error
 }
 

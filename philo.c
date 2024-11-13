@@ -44,7 +44,6 @@ static void	create_fork(t_table *tab, long i)
 		ft_error_exit("Memory allocation (fork)");
 	}
 	fork->index = i;
-	//fork->held = false;
 	fork->left = NULL;
 	fork->right = NULL;
 	if (i > 0 && i + 1 == tab->num_philo)

@@ -122,3 +122,6 @@ int	main(int argc, char **argv)
 	clear_table(&table);
 	return (0);
 }
+
+//Programa não termina com morte
+//Filósofos não devem ficar cheios ao terminar de comer..?

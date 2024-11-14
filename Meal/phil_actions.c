@@ -54,10 +54,20 @@ void	report_status(t_philo *phil, t_socas status)
 
 void	phil_eat(t_philo *phil)
 {
-	thread_mtx(&(phil->l_hand->fork_mutex), LOCK);
-	report_status(phil, FORK);
-	thread_mtx(&(phil->r_hand->fork_mutex), LOCK);
-	report_status(phil, FORK);
+	if (phil->l_hand->index < phil->r_hand->index)
+	{
+		thread_mtx(&(phil->l_hand->fork_mutex), LOCK);
+		report_status(phil, FORK);
+		thread_mtx(&(phil->r_hand->fork_mutex), LOCK);
+		report_status(phil, FORK);
+	}
+	else
+	{
+		thread_mtx(&(phil->r_hand->fork_mutex), LOCK);
+		report_status(phil, FORK);
+		thread_mtx(&(phil->l_hand->fork_mutex), LOCK);
+		report_status(phil, FORK);
+	}
 	set_mtx_long(&(phil->ph_mutex), &(phil->satt_time), get_time());
 	phil->meals++;
 	report_status(phil, EAT);

@@ -46,7 +46,7 @@ void	thread_mtx(pthread_mutex_t *mutex, t_thraction action)
 		ft_error_exit("Unknown Mutex action");
 }
 
-static void	handle_thread_error(int thread_return, t_thraction action)
+static void	handle_thread_error(int thread_return)
 {
 	if (thread_return == 0)
 		return ;
@@ -68,11 +68,11 @@ void	thread(pthread_t *thread, void *(*handle_action)(void *),
 				void *arg, t_thraction action)
 {
 	if (action == CREATE)
-		handle_thread_error(pthread_create(thread, NULL, handle_action, arg), LOCK);
+		handle_thread_error(pthread_create(thread, NULL, handle_action, arg));
 	else if (action == JOIN)
-		handle_thread_error(pthread_join(thread, NULL), JOIN);
+		handle_thread_error(pthread_join(*thread, NULL));
 	else if (action == DETACH)
-		handle_thread_error(pthread_detach(thread), DETACH);
+		handle_thread_error(pthread_detach(*thread));
 	else
 		ft_error_exit("Unknown Thread action");
 }

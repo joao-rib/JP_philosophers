@@ -123,6 +123,5 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-//Programa não termina com morte
 //Considerar micro_usleep
 //Filósofos não devem ficar cheios ao terminar de comer..?

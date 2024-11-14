@@ -80,12 +80,16 @@ void	phil_eat(t_philo *phil)
 
 void	phil_sleep(t_philo *phil)
 {
+	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+		return ;
 	report_status(phil, SLEEP);
 	usleep(phil->tab->time_sleep * 1000);
 }
 
 void	phil_think(t_philo *phil)
 {
+	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+		return ;
 	report_status(phil, THINK);
 	usleep(1000);
 }

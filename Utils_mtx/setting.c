@@ -14,29 +14,29 @@
 
 void	subtr_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
 {
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	*dest -= value;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 }
 
 void	add_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
 {
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	*dest += value;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 }
 
 void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
 {
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	*dest = value;
 	printf ("\nSet_mtx_long, Value=%ld\n\n", value); //ELIMINATE
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 }
 
 void	set_mtx_bool(pthread_mutex_t *mutex, bool *dest, bool value)
 {
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	*dest = value;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 }

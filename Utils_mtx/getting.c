@@ -16,9 +16,9 @@ long	get_mtx_long(pthread_mutex_t *mutex, long *dest)
 {
 	bool	value;
 
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	value = *dest;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 	return (value);
 }
 
@@ -26,9 +26,9 @@ bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest)
 {
 	bool	value;
 
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	value = *dest;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 	return (value);
 }
 

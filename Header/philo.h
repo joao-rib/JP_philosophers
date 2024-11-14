@@ -17,8 +17,9 @@
 # include <signal.h>
 # include <time.h>
 # include <pthread.h>
-//# include <sys/types.h>
-//# include <sys/wait.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <sys/time.h>
 # include "../libft/libft.h"
 
@@ -32,6 +33,17 @@ typedef enum e_socas
 	THINK,
 	DEAD,
 }	t_socas;
+
+typedef enum e_thraction
+{
+	INITIATE,
+	DESTROY,
+	LOCK,
+	UNLOCK,
+	CREATE,
+	JOIN,
+	DETACH,
+}	t_thraction;
 
 typedef struct s_fork
 {
@@ -96,6 +108,10 @@ long	get_mtx_long(pthread_mutex_t *mutex, long *dest);
 long	get_time(void);
 //Utils (mtx) - Checking
 bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2);
+//Utils (mtx) - Threading
+void	thread_mtx(pthread_mutex_t *mutex, t_thraction action);
+void	thread(pthread_t *thread, void *(*handle_action)(void *),
+				void *arg, t_thraction action);
 
 //Meal - Eating
 void	start_eating(t_table *tab);
@@ -112,3 +128,24 @@ void	phil_think(t_philo *phil);
 bool	phil_die(t_philo *phil);
 
 #endif
+
+/*Function              | Common Error Codes          | Description
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_init    | EINVAL, EAGAIN, ENOMEM      | Invalid attributes, resource limits, or memory shortage for
+                      |                             | mutex initialization.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_destroy | EBUSY, EINVAL               | Mutex is in use or not properly initialized.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_lock    | EINVAL, EDEADLK, EAGAIN     | Invalid mutex, potential deadlock, or recursion limit
+                      |                             | exceeded.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_mutex_unlock  | EINVAL, EPERM               | Invalid mutex or unlocking by a non-owner thread.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_join          | EINVAL, ESRCH, EDEADLK      | Invalid or detached thread, thread not found, or deadlock
+                      |                             | if joining self.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_detach        | EINVAL, ESRCH               | Invalid or nonexistent thread.
+----------------------|-----------------------------|-----------------------------------------------------------
+pthread_create        | EAGAIN, EINVAL, EPERM       | Resource limits, invalid attributes, or insufficient
+                      |                             | permissions.
+*/

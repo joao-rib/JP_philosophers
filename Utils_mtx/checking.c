@@ -17,9 +17,9 @@ bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2)
 	bool	check;
 
 	check = false;
-	pthread_mutex_lock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, LOCK);
 	if (val1 == val2)
 		check = true;
-	pthread_mutex_unlock(mutex); //Considerar um handle_error
+	thread_mtx(mutex, UNLOCK);
 	return (check);
 }

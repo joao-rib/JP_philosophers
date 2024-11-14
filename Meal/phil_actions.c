@@ -37,7 +37,7 @@ void	report_status(t_philo *phil, t_socas status)
 {
 	long	timestamp;
 
-	pthread_mutex_lock(&(phil->tab->tab_mutex)); //Different mutex for printing? //Considerar um handle_error
+	thread_mtx(&(phil->tab->tab_mutex), LOCK); //Different mutex for printing?
 	timestamp = get_time() - phil->tab->starting_time;
 	if (status == FORK)
 		printf("%ld %ld has taken a fork\n", timestamp, phil->index);
@@ -49,14 +49,14 @@ void	report_status(t_philo *phil, t_socas status)
 		printf("%ld %ld is eating\n", timestamp, phil->index);
 	else if (status == DEAD)
 		printf("%ld %ld died\n", timestamp, phil->index);
-	pthread_mutex_unlock(&(phil->tab->tab_mutex)); //Different mutex for printing? //Considerar um handle_error
+	thread_mtx(&(phil->tab->tab_mutex), UNLOCK); //Different mutex for printing?
 }
 
 void	phil_eat(t_philo *phil)
 {
-	pthread_mutex_lock(&(phil->l_hand->fork_mutex)); //Considerar um handle_error
+	thread_mtx(&(phil->l_hand->fork_mutex), LOCK);
 	report_status(phil, FORK);
-	pthread_mutex_lock(&(phil->r_hand->fork_mutex)); //Considerar um handle_error
+	thread_mtx(&(phil->r_hand->fork_mutex), LOCK);
 	report_status(phil, FORK);
 	set_mtx_long(&(phil->ph_mutex), &(phil->satt_time), get_time());
 	phil->meals++;
@@ -64,8 +64,8 @@ void	phil_eat(t_philo *phil)
 	usleep(phil->tab->time_eat * 1000);
 	if (phil->tab->num_meals >= 0 && phil->meals == phil->tab->num_meals)
 		set_mtx_bool(&(phil->ph_mutex), &(phil->satt), true);
-	pthread_mutex_unlock(&(phil->l_hand->fork_mutex)); //Considerar um handle_error
-	pthread_mutex_unlock(&(phil->r_hand->fork_mutex)); //Considerar um handle_error
+	thread_mtx(&(phil->l_hand->fork_mutex), UNLOCK);
+	thread_mtx(&(phil->r_hand->fork_mutex), UNLOCK);
 }
 
 void	phil_sleep(t_philo *phil)

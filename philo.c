@@ -51,7 +51,7 @@ static void	create_fork(t_table *tab, long i)
 		fork->right = tab->fork_list;
 		tab->fork_list->left = fork;
 	}
-	pthread_mutex_init(&(fork->fork_mutex), NULL);
+	thread_mtx(&(fork->fork_mutex), INITIATE);
 	fork_addback(&tab->fork_list, fork);
 }
 
@@ -74,7 +74,7 @@ static void	create_philo(t_table *tab, long i)
 		philosopher->right = tab->phil_list;
 		tab->phil_list->left = philosopher;
 	}
-	pthread_mutex_init(&(philosopher->ph_mutex), NULL);
+	thread_mtx(&(philosopher->ph_mutex), INITIATE);
 	phil_addback(&tab->phil_list, philosopher);
 }
 
@@ -93,7 +93,7 @@ static void	set_table(t_table *tab)
 	tab->running_threads = 0;
 	tab->ready_to_start = false;
 	tab->ready_to_end = false;
-	pthread_mutex_init(&(tab->tab_mutex), NULL);
+	thread_mtx(&(tab->tab_mutex), INITIATE);
 }
 
 int	main(int argc, char **argv)

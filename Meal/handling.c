@@ -65,7 +65,7 @@ void	*handle_table(void *arg)
 				report_status(find_phil(tab->phil_list, i), DEAD);
 				set_mtx_bool(&tab->tab_mutex, &tab->ready_to_end, true);
 			}
-		i++;
+			i++;
 		}
 	}
 	return (NULL);

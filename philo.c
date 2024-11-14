@@ -94,6 +94,7 @@ static void	set_table(t_table *tab)
 	tab->ready_to_start = false;
 	tab->ready_to_end = false;
 	thread_mtx(&(tab->tab_mutex), INITIATE);
+	thread_mtx(&(tab->print_mutex), INITIATE);
 }
 
 int	main(int argc, char **argv)
@@ -123,4 +124,3 @@ int	main(int argc, char **argv)
 }
 
 //Different mutex for printing?
-//Considerar handle_errors

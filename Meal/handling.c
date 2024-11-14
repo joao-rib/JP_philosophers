@@ -52,7 +52,7 @@ void	*handle_table(void *arg)
 	long		i;
 
 	tab = (t_table *)arg;
-	while (!check_mtx_equalto(&(tab->tab_mutex), tab->running_threads, tab->num_philo))
+	while (!check_mtx_equalto(&(tab->tab_mutex), &(tab->running_threads), &(tab->num_philo)))
 		i = 0;
 	while (!get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
 	{

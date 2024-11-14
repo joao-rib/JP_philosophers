@@ -12,13 +12,13 @@
 
 #include "../Header/philo.h"
 
-bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2)
+bool	check_mtx_equalto(pthread_mutex_t *mutex, long *val1, long *val2)
 {
 	bool	check;
 
 	check = false;
 	thread_mtx(mutex, LOCK);
-	if (val1 == val2)
+	if (*val1 == *val2)
 		check = true;
 	thread_mtx(mutex, UNLOCK);
 	return (check);

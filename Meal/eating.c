@@ -38,12 +38,12 @@ void	start_eating(t_table *tab)
 	{
 		phil_temp->satt_time = tab->starting_time;
 		thread(&(phil_temp->ph_thread), handle_spaghetti, phil_temp, CREATE);
+		printf ("\nPhil %ld, Time=%ld\n\n", phil_temp->index, phil_temp->satt_time); //ELIMINATE
 		phil_temp = phil_temp->right;
 		i++;
 	}
 	thread(&(tab->tab_thread), handle_table, tab, CREATE);
 	set_mtx_bool(&tab->tab_mutex, &tab->ready_to_start, true);
-	//phil_temp = tab->phil_list; //acho que já deu a volta...
 	i = 0;
 	while (i != tab->num_philo)
 	{

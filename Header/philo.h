@@ -83,6 +83,7 @@ typedef struct s_table
 	bool			ready_to_end;
 	pthread_t		tab_thread;
 	pthread_mutex_t	tab_mutex;
+	pthread_mutex_t	print_mutex;
 }			t_table;
 
 //Utils - Listing
@@ -107,7 +108,7 @@ bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest);
 long	get_mtx_long(pthread_mutex_t *mutex, long *dest);
 long	get_time(void);
 //Utils (mtx) - Checking
-bool	check_mtx_equalto(pthread_mutex_t *mutex, long val1, long val2);
+bool	check_mtx_equalto(pthread_mutex_t *mutex, long *val1, long *val2);
 //Utils (mtx) - Threading
 void	thread_mtx(pthread_mutex_t *mutex, t_thraction action);
 void	thread(pthread_t *thread, void *(*handle_action)(void *),

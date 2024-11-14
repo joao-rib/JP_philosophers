@@ -37,7 +37,7 @@ void	report_status(t_philo *phil, t_socas status)
 {
 	long	timestamp;
 
-	thread_mtx(&(phil->tab->tab_mutex), LOCK); //Different mutex for printing?
+	thread_mtx(&(phil->tab->print_mutex), LOCK);
 	timestamp = get_time() - phil->tab->starting_time;
 	if (status == FORK)
 		printf("%ld %ld has taken a fork\n", timestamp, phil->index);
@@ -49,7 +49,7 @@ void	report_status(t_philo *phil, t_socas status)
 		printf("%ld %ld is eating\n", timestamp, phil->index);
 	else if (status == DEAD)
 		printf("%ld %ld died\n", timestamp, phil->index);
-	thread_mtx(&(phil->tab->tab_mutex), UNLOCK); //Different mutex for printing?
+	thread_mtx(&(phil->tab->print_mutex), UNLOCK);
 }
 
 void	phil_eat(t_philo *phil)

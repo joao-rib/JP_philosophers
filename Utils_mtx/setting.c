@@ -30,7 +30,6 @@ void	set_mtx_long(pthread_mutex_t *mutex, long *dest, long value)
 {
 	thread_mtx(mutex, LOCK);
 	*dest = value;
-	printf ("\nSet_mtx_long, Value=%ld\n\n", value); //ELIMINATE
 	thread_mtx(mutex, UNLOCK);
 }
 

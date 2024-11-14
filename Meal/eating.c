@@ -38,7 +38,6 @@ void	start_eating(t_table *tab)
 	{
 		phil_temp->satt_time = tab->starting_time;
 		thread(&(phil_temp->ph_thread), handle_spaghetti, phil_temp, CREATE);
-		printf ("\nPhil %ld, Time=%ld\n\n", phil_temp->index, phil_temp->satt_time); //ELIMINATE
 		phil_temp = phil_temp->right;
 		i++;
 	}

@@ -14,7 +14,7 @@
 
 long	get_mtx_long(pthread_mutex_t *mutex, long *dest)
 {
-	bool	value;
+	long	value;
 
 	thread_mtx(mutex, LOCK);
 	value = *dest;

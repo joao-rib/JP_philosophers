@@ -89,7 +89,6 @@ bool	phil_die(t_philo *phil)
 		return (false);
 	lastmeal_time = get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
 	hungry_time = get_time();
-	printf ("\nHungry_time=%ld\nLastmeal_time=%ld\n\n", hungry_time, lastmeal_time); //ELIMINATE
 	subtr_mtx_long(&(phil->ph_mutex), &hungry_time, lastmeal_time);
 	if (hungry_time > phil->tab->time_die)
 		return (true);

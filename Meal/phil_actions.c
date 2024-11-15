@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eating.c                                           :+:      :+:    :+:   */
+/*   phil_actions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 20:08:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:28:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	report_status(t_philo *phil, t_socas status)
 {
 	long	timestamp;
 
+	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+		return ;
 	thread_mtx(&(phil->tab->print_mutex), LOCK);
 	timestamp = get_time() - phil->tab->starting_time;
 	if (status == FORK)

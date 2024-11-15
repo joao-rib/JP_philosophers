@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eating.c                                           :+:      :+:    :+:   */
+/*   handling.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 20:08:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:31:39 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,17 @@ void	*handle_spaghetti(void *arg)
 void	*handle_table(void *arg)
 {
 	t_table	*tab;
-	long		i;
+	long	i;
 
 	tab = (t_table *)arg;
-	while (!check_mtx_equalto(&(tab->tab_mutex), &(tab->running_threads), &(tab->num_philo)))
+	while (!check_mtx_equalto(&(tab->tab_mutex),
+			&(tab->running_threads), &(tab->num_philo)))
 		i = 0;
 	while (!get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
 	{
 		i = 1;
-		while (i <= tab->num_philo &&
-				!get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
+		while (i <= tab->num_philo
+			&& !get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
 		{
 			if (phil_die(find_phil(tab->phil_list, i)))
 			{

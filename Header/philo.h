@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 20:07:17 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:32:36 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ bool	check_mtx_equalto(pthread_mutex_t *mutex, long *val1, long *val2);
 //Utils (mtx) - Threading
 void	thread_mtx(pthread_mutex_t *mutex, t_thraction action);
 void	thread(pthread_t *thread, void *(*handle_action)(void *),
-				void *arg, t_thraction action);
+			void *arg, t_thraction action);
 
 //Meal - Eating
 void	start_eating(t_table *tab);
@@ -131,6 +131,7 @@ bool	phil_die(t_philo *phil);
 #endif
 
 /*
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -139,21 +140,21 @@ bool	phil_die(t_philo *phil);
 // Mutex type definition for simplicity
 typedef pthread_mutex_t t_mtx;
 
-// Shared boolean flag
-bool shared_flag = false;
+// Shared long
+long shared_long = 1;
 
-// Mutex to protect shared_flag
-t_mtx flag_mutex;
+// Mutex to protect shared_long
+t_mtx long_mutex;
 
-// Function to set a boolean value safely
-void set_bool(t_mtx *mutex, bool *dest, bool value)
+// Function to increment a long variable safely
+void add_long(t_mtx *mutex, long *dest, long value)
 {
     pthread_mutex_lock(mutex);
-    *dest = value;
+    *dest += value;
     pthread_mutex_unlock(mutex);
 }
 
-// Thread function to perform a task and set the flag
+// Thread function to perform a task and then increment
 void* thread_task(void* arg)
 {
     int id = *(int*)arg;
@@ -162,10 +163,10 @@ void* thread_task(void* arg)
     printf("Thread %d: working...\n", id);
     sleep(1); // Simulate a delay
 
-    // Safely set the shared flag to true
-    printf("Thread %d: setting shared_flag to true\n", id);
-    set_bool(&flag_mutex, &shared_flag, true);
-    //shared_flag = true;
+    // Safely increment the variable
+    printf("Thread %d: incrementing shared_long=%ld\n", id, shared_long);
+    add_long(&long_mutex, &shared_long, 1);
+    //shared_long++;
 
     return NULL;
 }
@@ -173,7 +174,7 @@ void* thread_task(void* arg)
 int main()
 {
     // Initialize the mutex
-    pthread_mutex_init(&flag_mutex, NULL);
+    pthread_mutex_init(&long_mutex, NULL);
 
     // Create multiple threads
     pthread_t threads[3];
@@ -188,11 +189,11 @@ int main()
         pthread_join(threads[i], NULL);
     }
 
-    // Check the value of shared_flag
-    printf("Main thread: final value of shared_flag = %s\n", shared_flag ? "true" : "false");
+    // Check the value of shared_long
+    printf("Main thread: final value of shared_long = %ld\n", shared_long);
 
     // Destroy the mutex
-    pthread_mutex_destroy(&flag_mutex);
+    pthread_mutex_destroy(&long_mutex);
 
     return 0;
 }

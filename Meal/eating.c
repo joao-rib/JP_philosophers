@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 11:23:06 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:42:16 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	eat_alone(t_table *tab)
 	t_philo	*phil_temp;
 
 	phil_temp = tab->phil_list;
+	tab->starting_time = get_time();
 	thread(&(phil_temp->ph_thread), handle_onephil, phil_temp, CREATE);
 	thread(&(tab->tab_thread), handle_table, tab, CREATE);
-	tab->starting_time = get_time();
 	set_mtx_bool(&tab->tab_mutex, &tab->ready_to_start, true);
 	thread(&(phil_temp->ph_thread), NULL, NULL, JOIN);
 	set_mtx_bool(&tab->tab_mutex, &tab->ready_to_end, true);

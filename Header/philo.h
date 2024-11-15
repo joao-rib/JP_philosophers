@@ -130,23 +130,70 @@ bool	phil_die(t_philo *phil);
 
 #endif
 
-/*Function              | Common Error Codes          | Description
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_mutex_init    | EINVAL, EAGAIN, ENOMEM      | Invalid attributes, resource limits, or memory shortage for
-                      |                             | mutex initialization.
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_mutex_destroy | EBUSY, EINVAL               | Mutex is in use or not properly initialized.
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_mutex_lock    | EINVAL, EDEADLK, EAGAIN     | Invalid mutex, potential deadlock, or recursion limit
-                      |                             | exceeded.
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_mutex_unlock  | EINVAL, EPERM               | Invalid mutex or unlocking by a non-owner thread.
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_join          | EINVAL, ESRCH, EDEADLK      | Invalid or detached thread, thread not found, or deadlock
-                      |                             | if joining self.
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_detach        | EINVAL, ESRCH               | Invalid or nonexistent thread.
-----------------------|-----------------------------|-----------------------------------------------------------
-pthread_create        | EAGAIN, EINVAL, EPERM       | Resource limits, invalid attributes, or insufficient
-                      |                             | permissions.
+/*
+#include <pthread.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h> // for sleep()
+
+// Mutex type definition for simplicity
+typedef pthread_mutex_t t_mtx;
+
+// Shared boolean flag
+bool shared_flag = false;
+
+// Mutex to protect shared_flag
+t_mtx flag_mutex;
+
+// Function to set a boolean value safely
+void set_bool(t_mtx *mutex, bool *dest, bool value)
+{
+    pthread_mutex_lock(mutex);
+    *dest = value;
+    pthread_mutex_unlock(mutex);
+}
+
+// Thread function to perform a task and set the flag
+void* thread_task(void* arg)
+{
+    int id = *(int*)arg;
+
+    // Simulate some work
+    printf("Thread %d: working...\n", id);
+    sleep(1); // Simulate a delay
+
+    // Safely set the shared flag to true
+    printf("Thread %d: setting shared_flag to true\n", id);
+    set_bool(&flag_mutex, &shared_flag, true);
+    //shared_flag = true;
+
+    return NULL;
+}
+
+int main()
+{
+    // Initialize the mutex
+    pthread_mutex_init(&flag_mutex, NULL);
+
+    // Create multiple threads
+    pthread_t threads[3];
+    int thread_ids[3] = {1, 2, 3};
+
+    for (int i = 0; i < 3; i++) {
+        pthread_create(&threads[i], NULL, thread_task, &thread_ids[i]);
+    }
+
+    // Wait for all threads to complete
+    for (int i = 0; i < 3; i++) {
+        pthread_join(threads[i], NULL);
+    }
+
+    // Check the value of shared_flag
+    printf("Main thread: final value of shared_flag = %s\n", shared_flag ? "true" : "false");
+
+    // Destroy the mutex
+    pthread_mutex_destroy(&flag_mutex);
+
+    return 0;
+}
 */

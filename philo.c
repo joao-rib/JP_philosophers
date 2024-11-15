@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 10:42:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:52:03 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,3 @@ int	main(int argc, char **argv)
 	clear_table(&table);
 	return (0);
 }
-
-//Considerar micro_usleep
-//Filósofos não devem ficar cheios ao terminar de comer..?

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 11:22:51 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:52:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ void	*handle_onephil(void *arg)
 	t_philo	*phil;
 
 	phil = (t_philo *)arg;
-	thread_mtx(&(phil->tab->print_mutex), LOCK);
-	printf("\nPhilosopher %ld is about to handle\n", phil->index);
-	thread_mtx(&(phil->tab->print_mutex), UNLOCK);
 	while (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_start)))
 		phil = (t_philo *)arg;
 	add_mtx_long(&(phil->tab->tab_mutex), &(phil->tab->running_threads), 1);
@@ -35,7 +32,7 @@ void	*handle_spaghetti(void *arg)
 
 	phil = (t_philo *)arg;
 	while (!get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_start)))
-		phil = (t_philo *)arg;
+		usleep(1);
 	add_mtx_long(&(phil->tab->tab_mutex), &(phil->tab->running_threads), 1);
 	set_mtx_long(&(phil->ph_mutex), &(phil->satt_time), get_time());
 	while (!get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
@@ -57,7 +54,7 @@ void	*handle_table(void *arg)
 	tab = (t_table *)arg;
 	while (!check_mtx_equalto(&(tab->tab_mutex),
 			&(tab->running_threads), &(tab->num_philo)))
-		i = 0;
+		usleep(1);
 	while (!get_mtx_bool(&(tab->tab_mutex), &(tab->ready_to_end)))
 	{
 		i = 1;

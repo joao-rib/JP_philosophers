@@ -6,32 +6,11 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 11:28:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:26:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Header/philo.h"
-
-/*void	precise_usleep(long usec, t_table *table)
-{
-	long	start;
-	long	elapsed;
-	long	rem;
-
-	start = gettime(MICROSECONDS);
-	while (gettime(MICROSECONDS) - start < usec)
-	{
-		if (simulation_finished(table))
-			break ;
-		elapsed = gettime(MICROSECONDS) - start;
-		rem = usec - elapsed;
-		if (rem > 1e3)
-			usleep(rem / 2);
-		else
-			while (gettime(MICROSECONDS) - start < usec)
-				;
-	}
-}*/
 
 void	report_status(t_philo *phil, t_socas status)
 {
@@ -56,6 +35,8 @@ void	report_status(t_philo *phil, t_socas status)
 
 void	phil_eat(t_philo *phil)
 {
+	if (!(phil->index % 3))
+		usleep(1000);
 	if (phil->l_hand->index < phil->r_hand->index)
 	{
 		thread_mtx(&(phil->l_hand->fork_mutex), LOCK);

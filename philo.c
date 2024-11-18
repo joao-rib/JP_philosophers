@@ -40,8 +40,8 @@ static void	create_fork(t_table *tab, long i)
 	fork = ft_calloc(1, sizeof(t_fork));
 	if (!fork)
 	{
+		ft_error_msg("Memory allocation (fork)");
 		clear_table(tab);
-		ft_error_exit("Memory allocation (fork)");
 	}
 	fork->index = i;
 	fork->left = NULL;
@@ -62,8 +62,8 @@ static void	create_philo(t_table *tab, long i)
 	philosopher = ft_calloc(1, sizeof(t_philo));
 	if (!philosopher)
 	{
+		ft_error_msg("Memory allocation (philosopher)");
 		clear_table(tab);
-		ft_error_exit("Memory allocation (philosopher)");
 	}
 	philosopher->index = i;
 	philosopher->meals = 0;
@@ -102,9 +102,9 @@ int	main(int argc, char **argv)
 	t_table	table;
 
 	if (argc != 5 && argc != 6)
-		ft_error_exit("Four or five arguments required");
+		return(ft_error_msg("Four or five arguments required"));
 	else if (!validate_args(argv, argc))
-		ft_error_exit("Arguments must be numbers");
+		return(ft_error_msg("Arguments must be numbers"));
 	ft_bzero(&table, sizeof(t_table));
 	table.num_philo = ft_atol(argv[1]);
 	table.time_die = ft_atol(argv[2]);
@@ -113,7 +113,8 @@ int	main(int argc, char **argv)
 	table.num_meals = -1;
 	if (argc == 6)
 		table.num_meals = ft_atol(argv[5]);
-	validate_numbers(&table);
+	if (!validate_numbers(&table))
+		return (0);
 	set_table(&table);
 	if (table.num_philo == 1)
 		eat_alone(&table);

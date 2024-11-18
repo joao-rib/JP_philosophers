@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eating.c                                           :+:      :+:    :+:   */
+/*   testin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 20:08:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:45:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Header/philo.h"
 
-long	get_mtx_long(pthread_mutex_t *mutex, long *dest)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	long	value;
+	void	*buff;
 
-	thread_mtx(mutex, LOCK);
-	value = *dest;
-	thread_mtx(mutex, UNLOCK);
-	return (value);
+	buff = malloc(nmemb * size);
+	if (buff != NULL)
+		memset(buff, 0, nmemb * size);
+	return (buff);
 }
 
-bool	get_mtx_bool(pthread_mutex_t *mutex, bool *dest)
+int	ft_error_msg(char *str)
 {
-	bool	value;
-
-	thread_mtx(mutex, LOCK);
-	value = *dest;
-	thread_mtx(mutex, UNLOCK);
-	return (value);
+	printf("\033[1m""\033[31m""""Error: ""\033[0m""%s\n", str);
+	return (1);
 }
 
-long	get_time(void)
+void	ft_bzero(void *s, size_t n)
 {
-	struct timeval	tv;
+	size_t	i;
+	char	*str;
 
-	if (gettimeofday(&tv, NULL))
-		ft_error_msg("Failure with gettimeofday()");
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	i = 0;
+	str = (char *)s;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
 }

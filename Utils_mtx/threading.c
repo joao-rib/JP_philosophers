@@ -43,7 +43,7 @@ void	thread_mtx(pthread_mutex_t *mutex, t_thraction action)
 	else if (action == DESTROY)
 		handle_mtx_error(pthread_mutex_destroy(mutex));
 	else
-		ft_error_exit("Unknown Mutex action");
+		ft_error_msg("Unknown Mutex action");
 }
 
 static void	handle_thread_error(int thread_return)
@@ -74,5 +74,5 @@ void	thread(pthread_t *thread, void *(*handle_action)(void *),
 	else if (action == DETACH)
 		handle_thread_error(pthread_detach(*thread));
 	else
-		ft_error_exit("Unknown Thread action");
+		ft_error_msg("Unknown Thread action");
 }

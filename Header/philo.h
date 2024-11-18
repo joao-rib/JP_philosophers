@@ -13,6 +13,10 @@
 #ifndef PHILO_H
 # define PHILO_H
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <stdbool.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <time.h>
@@ -21,7 +25,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/time.h>
-# include "../libft/libft.h"
+//# include "../libft/libft.h"
 
 typedef struct s_table	t_table;
 
@@ -94,7 +98,7 @@ t_fork	*fork_last(t_fork *lst);
 void	fork_addback(t_fork **p_lst, t_fork *new);
 //Utils - Validating
 bool	validate_args(char **av, int ac);
-void	validate_numbers(t_table *tab);
+bool	validate_numbers(t_table *tab);
 //Utils - Clearing
 void	clear_table(t_table *tab);
 
@@ -113,6 +117,14 @@ bool	check_mtx_equalto(pthread_mutex_t *mutex, long *val1, long *val2);
 void	thread_mtx(pthread_mutex_t *mutex, t_thraction action);
 void	thread(pthread_t *thread, void *(*handle_action)(void *),
 			void *arg, t_thraction action);
+
+//Utils (other)
+void	*ft_calloc(size_t nmemb, size_t size);
+void	ft_bzero(void *s, size_t n);
+bool	ft_isdigit(int c);
+bool	ft_isdelim(int c);
+long	ft_atol(const char *str);
+int		ft_error_msg(char *str);
 
 //Meal - Eating
 void	start_eating(t_table *tab);

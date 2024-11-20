@@ -102,9 +102,9 @@ int	main(int argc, char **argv)
 	t_table	table;
 
 	if (argc != 5 && argc != 6)
-		return(ft_error_msg("Four or five arguments required"));
+		return (ft_error_msg("Four or five arguments required"));
 	else if (!validate_args(argv, argc))
-		return(ft_error_msg("Arguments must be numbers"));
+		return (ft_error_msg("Arguments must be numbers"));
 	ft_bzero(&table, sizeof(t_table));
 	table.num_philo = ft_atol(argv[1]);
 	table.time_die = ft_atol(argv[2]);

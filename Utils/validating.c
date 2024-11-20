@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/20 15:55:13 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:42:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	validate_numbers(t_table *tab)
 		ft_error_msg("Time to eat must be greater than 60 miliseconds");
 	else if (tab->time_sleep < 60)
 		ft_error_msg("Time to sleep must be greater than 60 miliseconds");
-	else if (tab->num_philo == 0)
+	else if (tab->num_philo == 0 || tab->num_meals == 0)
 		return (false);
 	else
 		return (true);

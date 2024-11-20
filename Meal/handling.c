@@ -6,11 +6,32 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 12:42:38 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:20:52 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Header/philo.h"
+
+void	report_status(t_philo *phil, t_socas status)
+{
+	long	timestamp;
+
+	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+		return ;
+	thread_mtx(&(phil->tab->print_mutex), LOCK);
+	timestamp = get_time() - phil->tab->starting_time;
+	if (status == FORK)
+		printf("%ld %ld has taken a fork\n", timestamp, phil->index);
+	else if (status == THINK)
+		printf("%ld %ld is thinking\n", timestamp, phil->index);
+	else if (status == SLEEP)
+		printf("%ld %ld is sleeping\n", timestamp, phil->index);
+	else if (status == EAT)
+		printf("%ld %ld is eating\n", timestamp, phil->index);
+	else if (status == DEAD)
+		printf("%ld %ld died\n", timestamp, phil->index);
+	thread_mtx(&(phil->tab->print_mutex), UNLOCK);
+}
 
 void	*handle_onephil(void *arg)
 {
@@ -21,6 +42,7 @@ void	*handle_onephil(void *arg)
 		usleep(1);
 	add_mtx_long(&(phil->tab->tab_mutex), &(phil->tab->running_threads), 1);
 	set_mtx_long(&(phil->ph_mutex), &(phil->satt_time), get_time());
+	report_status(phil, FORK);
 	while (!get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
 		usleep(2);
 	return (NULL);

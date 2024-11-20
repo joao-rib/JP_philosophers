@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 10:30:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:55:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 bool	validate_numbers(t_table *tab)
 {
 	if (tab->time_die < 0 || tab->time_eat < 0 || tab->time_sleep < 0
-		|| tab->num_philo < 0 || tab->num_meals < 0)
+		|| tab->num_philo < 0)
 		ft_error_msg("Negative values not accepted");
-	if (tab->time_die < 60)
+	else if (tab->time_die < 60)
 		ft_error_msg("Time to die must be greater than 60 miliseconds");
 	else if (tab->time_eat < 60)
 		ft_error_msg("Time to eat must be greater than 60 miliseconds");

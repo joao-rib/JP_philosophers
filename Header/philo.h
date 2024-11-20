@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 10:32:36 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:28:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,9 @@ void	phil_think(t_philo *phil);
 bool	phil_die(t_philo *phil);
 
 #endif
+
+//usleep(phil->tab->time_eat * 1000);
+//usleep(phil->tab->time_sleep * 1000);
 
 /*
 

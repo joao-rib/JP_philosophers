@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 11:52:03 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:53:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,10 @@ int	main(int argc, char **argv)
 	table.num_meals = -1;
 	if (argc == 6)
 		table.num_meals = ft_atol(argv[5]);
+	if (argc == 6 && table.num_meals < 0)
+		return (ft_error_msg("Negative values not accepted"));
 	if (!validate_numbers(&table))
-		return (0);
+		return (1);
 	set_table(&table);
 	if (table.num_philo == 1)
 		eat_alone(&table);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testin.c                                           :+:      :+:    :+:   */
+/*   listing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/16 15:45:15 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:52:31 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ t_philo	*find_phil(t_philo *lst, long index)
 	if (!lst)
 		return (NULL);
 	buff = lst;
+	if (buff->index == index)
+		return (buff);
+	else
+		buff = buff->right;
 	while (buff->right != NULL && (buff->index > buff->left->index))
 	{
 		if (buff->index == index)

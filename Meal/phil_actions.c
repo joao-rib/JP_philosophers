@@ -6,34 +6,13 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/15 12:26:19 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:28:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Header/philo.h"
 
-void	report_status(t_philo *phil, t_socas status)
-{
-	long	timestamp;
-
-	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
-		return ;
-	thread_mtx(&(phil->tab->print_mutex), LOCK);
-	timestamp = get_time() - phil->tab->starting_time;
-	if (status == FORK)
-		printf("%ld %ld has taken a fork\n", timestamp, phil->index);
-	else if (status == THINK)
-		printf("%ld %ld is thinking\n", timestamp, phil->index);
-	else if (status == SLEEP)
-		printf("%ld %ld is sleeping\n", timestamp, phil->index);
-	else if (status == EAT)
-		printf("%ld %ld is eating\n", timestamp, phil->index);
-	else if (status == DEAD)
-		printf("%ld %ld died\n", timestamp, phil->index);
-	thread_mtx(&(phil->tab->print_mutex), UNLOCK);
-}
-
-void	phil_eat(t_philo *phil)
+static void	grab_forks(t_philo *phil)
 {
 	if (!(phil->index % 3))
 		usleep(1000);
@@ -51,10 +30,22 @@ void	phil_eat(t_philo *phil)
 		thread_mtx(&(phil->l_hand->fork_mutex), LOCK);
 		report_status(phil, FORK);
 	}
+}
+
+void	phil_eat(t_philo *phil)
+{
+	long	meal_start;
+
+	grab_forks(phil);
 	set_mtx_long(&(phil->ph_mutex), &(phil->satt_time), get_time());
+	meal_start = get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
 	phil->meals++;
 	report_status(phil, EAT);
-	usleep(phil->tab->time_eat * 1000);
+	while (get_time() - meal_start < phil->tab->time_eat)
+	{
+		if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+			break ;
+	}
 	if (phil->tab->num_meals >= 0 && phil->meals == phil->tab->num_meals)
 		set_mtx_bool(&(phil->ph_mutex), &(phil->satt), true);
 	thread_mtx(&(phil->l_hand->fork_mutex), UNLOCK);
@@ -63,10 +54,19 @@ void	phil_eat(t_philo *phil)
 
 void	phil_sleep(t_philo *phil)
 {
+	long	sleepy_time;
+	long	lastmeal_time;
+
 	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
 		return ;
 	report_status(phil, SLEEP);
-	usleep(phil->tab->time_sleep * 1000);
+	sleepy_time = get_time();
+	lastmeal_time = get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
+	while (get_time() - sleepy_time < phil->tab->time_sleep)
+	{
+		if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
+			break ;
+	}
 }
 
 void	phil_think(t_philo *phil)

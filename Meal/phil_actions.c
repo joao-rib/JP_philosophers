@@ -55,13 +55,11 @@ void	phil_eat(t_philo *phil)
 void	phil_sleep(t_philo *phil)
 {
 	long	sleepy_time;
-	long	lastmeal_time;
 
 	if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
 		return ;
 	report_status(phil, SLEEP);
 	sleepy_time = get_time();
-	lastmeal_time = get_mtx_long(&(phil->ph_mutex), &(phil->satt_time));
 	while (get_time() - sleepy_time < phil->tab->time_sleep)
 	{
 		if (get_mtx_bool(&(phil->tab->tab_mutex), &(phil->tab->ready_to_end)))
